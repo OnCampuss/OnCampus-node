@@ -7,7 +7,6 @@ class Travel {
 	constructor({
 		id,
 		userId,
-		idViagem,
 		nameViagem,
 		voltoInViagem,
 		vouInViagem,
@@ -16,7 +15,6 @@ class Travel {
 	}) {
 		this.id = id ?? uuidV4();
 		this.userId = userId;
-		this.idViagem = idViagem;
 		this.nameViagem = nameViagem;
 		this.voltoInViagem = voltoInViagem;
 		this.vouInViagem = vouInViagem;

@@ -12,7 +12,6 @@ class TravelController {
 
 	async save(request) {
 		const {
-			idViagem,
 			nameViagem,
 			voltoInViagem,
 			vouInViagem,
@@ -31,7 +30,6 @@ class TravelController {
 		}
 		const travel = await this.service.createTravels({
 			userId: user.id,
-			idViagem,
 			nameViagem,
 			voltoInViagem,
 			vouInViagem,

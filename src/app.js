@@ -1,7 +1,7 @@
 const fastify = require("fastify");
-const UserPostgreRepository = require("./auth/UserPostgreRepository");
-const AuthService = require("./auth/AuthService");
-const AuthController = require("./auth/AuthController");
+const UserPostgreRepository = require("./auth/UserAuth/UserPostgreRepository");
+const AuthService = require("./auth/UserAuth/UserAuthService");
+const AuthController = require("./auth/UserAuth/UserAuthController");
 
 const travelPostgreRepository = require("./travels/travelPostgreRepository");
 const TravelService = require("./travels/travelService");

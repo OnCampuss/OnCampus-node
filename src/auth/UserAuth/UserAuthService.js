@@ -30,7 +30,7 @@ class AuthService {
 		const token = jwt.sign(
 			{ id: user.id, email: user.email },
 			"segredo-do-jwt",
-			{ expiresIn: "1d" },
+			{ expiresIn: "30d" },
 		);
 		//ExpiresIn :Válido por quanto tempo*
 		return { token, user };
