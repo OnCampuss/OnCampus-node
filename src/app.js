@@ -1,7 +1,24 @@
 const fastify = require("fastify");
+
+// IMPORT DOS USUARIOS
 const UserPostgreRepository = require("./auth/UserAuth/UserPostgreRepository");
 const AuthService = require("./auth/UserAuth/UserAuthService");
 const AuthController = require("./auth/UserAuth/UserAuthController");
+
+const userRepository = new UserPostgreRepository();
+const authService = new AuthService(userRepository);
+const authController = new AuthController(authService);
+
+
+//IMPORT DOS ADMINS
+const AdminAuthService = require("./auth/AdminAuth/AdminAuthService")
+const AdminController = require("./auth/AdminAuth/AdminController")
+const AdminPostgreRepository = require("./auth/AdminAuth/AdminPostgreRepository")
+
+const adminRepository = new AdminPostgreRepository();
+const adminAuthService = new AdminAuthService(adminRepository);
+const adminController = new AdminController(adminAuthService);
+
 
 const travelPostgreRepository = require("./travels/travelPostgreRepository");
 const TravelService = require("./travels/travelService");
@@ -14,12 +31,8 @@ const travelService = new TravelService(travelRepository);
 //Vinculado ao método de listar Viagens
 const travelController = new TravelController(travelService);
 
-//Usuário
-const userRepository = new UserPostgreRepository();
-const authService = new AuthService(userRepository);
-const authController = new AuthController(authService);
 
-const validadorDeOpcaoAutenticacao = {
+const validadorTokenUsuario = {
 	//PreHandler: Faz a verificação do Token do usuário.
 	preHandler: async (request, reply) => {
 		//Bearer == Token do usuário.
@@ -29,10 +42,28 @@ const validadorDeOpcaoAutenticacao = {
 				.code(401)
 				.send({ message: "Não autorizado!!   DEBUG: Faltando Token" });
 
-		const user = await authService.verificaToken(token);
+		const user = await authService.verificaUserToken(token);
 		if (!user)
 			reply.code(404).send({ message: "Não autorizado!! Token Inválido" });
 		request.user = user;
+	}
+};
+
+
+const validadorTokenAdmin = {
+	//PreHandler: Faz a verificação do Token do usuário.
+	preHandler: async (request, reply) => {
+		//Bearer == Token do usuário.
+		const token = request.headers.authorization?.replace(/^Bearer /, "");
+		if (!token)
+			reply
+				.code(401)
+				.send({ message: "Não autorizado!!   DEBUG: Faltando Token" });
+
+		const admin = await adminAuthService.verificaAdminToken(token);
+		if (!admin)
+			reply.code(404).send({ message: "Não autorizado!! Token Inválido" });
+		request.user = admin;
 	}
 };
 
@@ -41,14 +72,27 @@ app.get("/hello", (request, reply) => {
 	reply.send({ message: "Aplicação rodando Corretamente!!  :" });
 });
 
+
+// Criação de usuário ADM
+app.post("/api/auth/AdminRegister", async (request, reply) => {
+	const { code, body } = await adminAuthService.register(request);
+	reply.code(code).send(body);
+});
+
+app.post("/api/auth/Adminlogin", async (request, reply) => {
+	const { code, body } = await adminController.login(request);
+	reply.code(code).send(body);
+});
+
+
 // Método no qual lista todas as viagens cadastradas
-app.get("/api/travels", validadorDeOpcaoAutenticacao, async (request, reply) => {
+app.get("/api/FindTravels", validadorTokenUsuario, async (request, reply) => {
 	const { code, body } = await travelController.index(request);
 	reply.code(code).send(body);
 });
 
 // Método no qual faz a criação da viagens
-app.post("/api/travels", validadorDeOpcaoAutenticacao, async (request, reply) => {
+app.post("/api/CreateTravels", validadorTokenUsuario, async (request, reply) => {
 	const { code, body } = await travelController.save(request);
 	reply.code(code).send(body);
 });

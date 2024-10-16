@@ -11,4 +11,4 @@ class AdminAuth {
   }
 }
 
-module.exports = User;
+module.exports = AdminAuth;

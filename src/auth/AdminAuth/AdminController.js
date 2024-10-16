@@ -1,4 +1,4 @@
-class AuthAdminController {
+class AdminController {
   constructor(service) {
     this.service = service;
   }
@@ -12,8 +12,8 @@ class AuthAdminController {
       };
     }
     try {
-      const user = await this.service.register(name, email, password);
-      return { code: 201, body: user, message: "Usuário criado com sucesso!!" };
+      const admin = await this.service.register(name, email, password);
+      return { code: 201, body: admin, message: "Usuário criado com sucesso!!" };
     } catch (error) {
       return { code: 400, body: { message: error.message } };
     }
@@ -36,4 +36,4 @@ class AuthAdminController {
   }
 }
 
-module.exports = AuthAdminController;
+module.exports = AdminController;

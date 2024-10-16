@@ -13,17 +13,11 @@ class TravelService {
 	async createTravels({
 		userId,
 		nameViagem,
-		voltoInViagem,
-		vouInViagem,
-		vouAndVoltoInViagem,
 		destinoViagem,
 	}) {
 		const newTravels = new Travel({
 			userId,
 			nameViagem,
-			voltoInViagem,
-			vouInViagem,
-			vouAndVoltoInViagem,
 			destinoViagem,
 		});
 

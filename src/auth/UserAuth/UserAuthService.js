@@ -2,7 +2,7 @@ const jwt = require("jsonwebtoken");
 const User = require("./User");
 const bcrypt = require("bcrypt");
 
-class AuthService {
+class UserAuthService {
 	constructor(repository) {
 		this.repository = repository;
 	}
@@ -36,10 +36,10 @@ class AuthService {
 		return { token, user };
 	}
 
-	async verificaToken(token) {
+	async verificaUserToken(token) {
 		const tokenDecodificado = jwt.verify(token, "segredo-do-jwt");
 		const user = await this.repository.findByEmail(tokenDecodificado.email);
 		return user;
 	}
 }
-module.exports = AuthService;
+module.exports = UserAuthService;

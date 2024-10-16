@@ -1,5 +1,5 @@
-const db = require("../database");
-const User = require("./User");
+const db = require("../../database")
+const admin = require("./Admin");
 
 class AdminPostgreRepository {
   constructor() {
@@ -9,18 +9,18 @@ class AdminPostgreRepository {
   // Realiza a busca do usuário criado com o e-mail
   //Pode se alterar o oneOrNone() por query()
   async findByEmail(email) {
-    const UsuarioArmazenado = await this.db.oneOrNone("SELECT * FROM Users WHERE email = $1", email)
-    return UsuarioArmazenado ? new User(UsuarioArmazenado) : null
+    const UsuarioAdminArmazenado = await this.db.oneOrNone("SELECT * FROM Admins WHERE email = $1", email)
+    return UsuarioAdminArmazenado ? new admin(UsuarioAdminArmazenado) : null
   }
 
   //Push -- Insere novos usuários "Criação de usuários"
 
-  async save(user) {
-    await this.db.none("INSERT INTO Users (id,name,email,password) VALUES ($1, $2,$3,$4)", [
-      user.id,
-      user.name,
-      user.email,
-      user.password
+  async save(admin) {
+    await this.db.none("INSERT INTO Admins (id,name,email,password) VALUES ($1, $2,$3,$4)", [
+      admin.id,
+      admin.name,
+      admin.email,
+      admin.password
     ])
   }
 }

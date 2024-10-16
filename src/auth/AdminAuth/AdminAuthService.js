@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-const User = require("./User");
+const Admin = require("./Admin");
 const bcrypt = require("bcrypt");
 
 class AdminAuthService {
@@ -11,7 +11,7 @@ class AdminAuthService {
     const UsuariosExistentes = await this.repository.findByEmail(email);
     if (UsuariosExistentes)
       throw new Error("Esse email já está sendo usado por outro usuário!!  ");
-    const NovoUsuario = new User({ name, email, password });
+    const NovoUsuario = new Admin({ name, email, password });
 
     //Adicionando a biblioteca bcrypt, ela serve para fazer uma criptografia da senha.
     NovoUsuario.password = bcrypt.hashSync(NovoUsuario.password, 10);
@@ -21,25 +21,25 @@ class AdminAuthService {
 
   //Método de Login
   async login(email, password) {
-    const user = await this.repository.findByEmail(email);
-    if (!user) throw new Error("Usuário não encontrado");
+    const admin = await this.repository.findByEmail(email);
+    if (!admin) throw new Error("Usuário não encontrado");
 
     const ComparaSenhas = bcrypt.compareSync(password, user.password);
     if (!ComparaSenhas) throw new Error("Senha incorreta!!");
 
     const token = jwt.sign(
-      { id: user.id, email: user.email },
+      { id: admin.id, email: user.email },
       "segredo-do-jwt",
       { expiresIn: "30d" },
     );
     //ExpiresIn :Válido por quanto tempo*
-    return { token, user };
+    return { token, admin };
   }
 
-  async verificaToken(token) {
+  async verificaAdminToken(token) {
     const tokenDecodificado = jwt.verify(token, "segredo-do-jwt");
-    const user = await this.repository.findByEmail(tokenDecodificado.email);
-    return user;
+    const admin = await this.repository.findByEmail(tokenDecodificado.email);
+    return admin;
   }
 }
 module.exports = AdminAuthService;
