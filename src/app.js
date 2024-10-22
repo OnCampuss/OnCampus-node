@@ -1,5 +1,13 @@
 const fastify = require("fastify");
 
+
+const TravelStatusRepository = require("../src/travelStatus/travelStatusRepository");
+const TravelStatusService = require("../src/travelStatus/travelStatus");
+
+const statusRepository = new TravelStatusRepository();
+const statusService = new TravelStatusService(statusRepository);
+
+
 // IMPORT DOS USUARIOS
 const UserPostgreRepository = require("./auth/UserAuth/UserPostgreRepository");
 const AuthService = require("./auth/UserAuth/UserAuthService");

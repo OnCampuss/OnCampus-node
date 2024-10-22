@@ -20,3 +20,14 @@ CREATE TABLE IF NOT EXISTS Travels (
   user_id VARCHAR(36),
   FOREIGN KEY (user_id) REFERENCES Users(id)
 );
+
+
+CREATE TABLE IF NOT EXISTS TravelStatus (
+  id VARCHAR(36) PRIMARY KEY,
+  vou BOOLEAN DEFAULT false,
+  volto BOOLEAN DEFAULT false,
+  vou_e_volto BOOLEAN DEFAULT false,
+  nao_vou BOOLEAN DEFAULT false,
+  travel_id VARCHAR(36) NOT NULL,
+  FOREIGN KEY (travel_id) REFERENCES Travels(id) ON DELETE CASCADE
+);

@@ -1,39 +1,31 @@
-const Travel = require("./travel");
-const create = require("./travelPostgreRepository");
-
 class TravelService {
-	constructor(repository) {
-		this.repository = repository;
+	constructor(travelRepository, statusService) {
+		this.travelRepository = travelRepository;
+		this.statusService = statusService;
 	}
 
 	async findAllTravels() {
-		return await this.repository.findAll();
+		return await this.travelRepository.findAll();
 	}
 
-	async createTravels({
-		userId,
-		nameViagem,
-		destinoViagem,
-	}) {
-		const newTravels = new Travel({
-			userId,
-			nameViagem,
-			destinoViagem,
-		});
+	async createTravels({ userId, nameViagem, destinoViagem, statusData }) {
+		const newTravel = new Travel({ userId, nameViagem, destinoViagem });
 
-		//Método para fazer a validadação se a viagem já está criada
-		const allTravels = await this.repository.findAll()
+		// Verificar se a viagem já existe
+		const allTravels = await this.travelRepository.findAll();
+		const viagemExistente = allTravels.find(t => t.nameViagem === newTravel.nameViagem);
 
-		const validadorReservaViagens = allTravels.find((Travel) => {
-			return Travel.nameViagem === newTravels.nameViagem;
-		});
-
-		if (validadorReservaViagens) {
+		if (viagemExistente) {
 			throw new Error("A viagem com esse nome já está criada.");
 		}
 
-		await this.repository.create(newTravels);
-		return newTravels;
+		// Criar a viagem no banco
+		await this.travelRepository.create(newTravel);
+
+		// Criar o status para a viagem recém-criada
+		await this.statusService.createStatus(newTravel.id, statusData);
+
+		return newTravel;
 	}
 }
 

@@ -1,4 +1,4 @@
-class TravelController {
+class TravelStatusController {
 	constructor(service) {
 		this.service = service;
 	}
@@ -15,7 +15,7 @@ class TravelController {
 		if (!nameViagem) {
 			return {
 				code: 400,
-				body: { message: "A Viagem não pode ser criada sem um nome!" },
+				body: { message: "A viagem não pode ser criada sem um nome!" },
 			};
 		}
 
@@ -23,7 +23,7 @@ class TravelController {
 			userId: user.id,
 			nameViagem,
 			destinoViagem,
-			statusData: status,
+			status,
 		});
 
 		return {
@@ -33,4 +33,4 @@ class TravelController {
 	}
 }
 
-module.exports = TravelController;
+module.exports = TravelStatusController;
