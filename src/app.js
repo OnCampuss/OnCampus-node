@@ -27,6 +27,7 @@ const adminRepository = new AdminPostgreRepository();
 const adminAuthService = new AdminAuthService(adminRepository);
 const adminController = new AdminController(adminAuthService);
 
+// weqwewq
 
 const travelPostgreRepository = require("./travels/travelPostgreRepository");
 const TravelService = require("./travels/travelService");
