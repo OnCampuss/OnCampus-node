@@ -1,4 +1,18 @@
 const fastify = require("fastify");
+
+//Travel VOTE
+
+const TravelVoteRepository = require("./travelVote/travelVoteRepository");
+const TravelVoteService = require("./travelVote/travelVoteService");
+const TravelVoteController = require("./travelVote/travelVoteController");
+
+const voteRepository = new TravelVoteRepository();
+const voteService = new TravelVoteService(voteRepository);
+const voteController = new TravelVoteController(voteService);
+
+
+
+
 const UserPostgreRepository = require("./auth/UserAuth/UserPostgreRepository");
 const AuthService = require("./auth/UserAuth/UserAuthService");
 const AuthController = require("./auth/UserAuth/UserAuthController");
@@ -36,6 +50,7 @@ const validadorDeOpcaoAutenticacao = {
 	}
 };
 
+
 // Método que faz apenas um teste se a aplicação está rodando na porta certa
 app.get("/hello", (request, reply) => {
 	reply.send({ message: "Aplicação rodando Corretamente!!  :" });
@@ -63,5 +78,26 @@ app.post("/api/auth/login", async (request, reply) => {
 	const { code, body } = await authController.login(request);
 	reply.code(code).send(body);
 });
+
+
+app.post(
+	"/api/votes",
+	validadorDeOpcaoAutenticacao,
+	async (request, reply) => {
+		const { code, body } = await voteController.save(request);
+		reply.code(code).send(body);
+	}
+);
+
+app.get(
+	"/api/votes",
+	validadorDeOpcaoAutenticacao,
+	async (request, reply) => {
+		const { code, body } = await voteController.index(request);
+		reply.code(code).send(body);
+	}
+);
+
+
 
 module.exports = app;

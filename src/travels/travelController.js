@@ -13,9 +13,6 @@ class TravelController {
 	async save(request) {
 		const {
 			nameViagem,
-			voltoInViagem,
-			vouInViagem,
-			vouAndVoltoInViagem,
 			destinoViagem,
 		} = request.body;
 		const user = request.user;
@@ -31,9 +28,6 @@ class TravelController {
 		const travel = await this.service.createTravels({
 			userId: user.id,
 			nameViagem,
-			voltoInViagem,
-			vouInViagem,
-			vouAndVoltoInViagem,
 			destinoViagem,
 		});
 
