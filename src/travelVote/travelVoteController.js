@@ -3,9 +3,10 @@ class TravelVoteController {
     this.service = service;
   }
 
-  async save(request) {
-    const { travelId, vou, volto, vouEvolto, naoVou } = request.body;
+  async save(request, reply) {
+    const { vou, volto, vouEvolto, naoVou } = request.body;
     const user = request.user;
+    const { travelId } = request.params; // Pegando travelId dos parâmetros da URL
 
     const vote = await this.service.createVote({
       travelId,
@@ -16,13 +17,13 @@ class TravelVoteController {
       naoVou,
     });
 
-    return { code: 201, body: { message: "Voto registrado com sucesso!", vote } };
+    return reply.status(201).send({ message: "Voto registrado com sucesso!", vote });
   }
 
-  async index(request) {
+  async index(request, reply) {
     const { travelId } = request.query;
     const votes = await this.service.getVotesByTravel(travelId);
-    return { code: 200, body: { votes } };
+    return reply.status(200).send({ votes });
   }
 }
 
