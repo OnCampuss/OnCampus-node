@@ -1,3 +1,5 @@
+const UserInfoService = require("./userInfoService");
+
 class UserInfoController {
   constructor(service) {
     this.service = service;
@@ -28,6 +30,33 @@ class UserInfoController {
 
       return reply.status(200).send({
         message: "Informações adicionadas com sucesso",
+        userInfo,
+      });
+    } catch (error) {
+      return reply.status(400).send({ message: error.message });
+    }
+  }
+
+  async update(request, reply) {
+    const { cpf, matricula, semestre, contaativa, localizacao } = request.body;
+    const user = request.user;
+
+    if (!cpf) {
+      return reply.status(400).send({ message: "A informação do usuário não pode ser atualizada sem um CPF!!!" });
+    }
+
+    try {
+      const userInfo = await this.service.updateUserInfo({
+        cpf,
+        matricula,
+        semestre,
+        contaativa,
+        localizacao,
+        userId: user.id,
+      });
+
+      return reply.status(200).send({
+        message: "Informações atualizadas com sucesso",
         userInfo,
       });
     } catch (error) {

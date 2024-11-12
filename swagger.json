@@ -1,0 +1,401 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "API de Viagens",
+    "description": "Documentação da API usando Swagger",
+    "version": "1.0.0"
+  },
+  "host": "localhost:3000",
+  "schemes": [
+    "http"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/api/auth/register": {
+      "post": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Registrar usuário",
+        "description": "Registrar um novo usuário",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Register"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Usuário registrado",
+            "schema": {
+              "$ref": "#/definitions/UserResponse"
+            }
+          }
+        }
+      }
+    },
+    "/api/auth/login": {
+      "post": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Login usuário",
+        "description": "Login do usuário",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Login"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sucesso no login",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "token": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/travels": {
+      "post": {
+        "tags": [
+          "travel"
+        ],
+        "summary": "Criar viagem",
+        "description": "Criar uma nova viagem",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Travel"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Viagem criada",
+            "schema": {
+              "$ref": "#/definitions/TravelResponse"
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "travel"
+        ],
+        "summary": "Obter viagens",
+        "description": "Listar todas as viagens cadastradas",
+        "responses": {
+          "200": {
+            "description": "Sucesso",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Travel"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/travels/{travelId}/votes": {
+      "post": {
+        "tags": [
+          "vote"
+        ],
+        "summary": "Registrar voto",
+        "description": "Registrar um voto para uma viagem",
+        "parameters": [
+          {
+            "name": "travelId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "uuid"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/TravelVote"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Voto registrado com sucesso!",
+            "schema": {
+              "$ref": "#/definitions/VoteResponse"
+            }
+          }
+        }
+      }
+    },
+    "/api/votes": {
+      "get": {
+        "tags": [
+          "vote"
+        ],
+        "summary": "Obter votos",
+        "description": "Obter votos por viagem",
+        "parameters": [
+          {
+            "name": "travelId",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "uuid"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sucesso",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/TravelVote"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/userinfo": {
+      "get": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Obter informações do usuário",
+        "description": "Obter informações do usuário",
+        "responses": {
+          "200": {
+            "description": "Sucesso",
+            "schema": {
+              "$ref": "#/definitions/UserInfoResponse"
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Salvar informações do usuário",
+        "description": "Salvar informações do usuário",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UserInfo"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Informações do usuário salvas",
+            "schema": {
+              "$ref": "#/definitions/UserInfoResponse"
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Atualizar informações do usuário",
+        "description": "Atualizar informações do usuário",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UserInfo"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Informações do usuário atualizadas",
+            "schema": {
+              "$ref": "#/definitions/UserInfoResponse"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Register": {
+      "type": "object",
+      "required": [
+        "name",
+        "email",
+        "password"
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string",
+          "format": "email"
+        },
+        "password": {
+          "type": "string"
+        }
+      }
+    },
+    "Login": {
+      "type": "object",
+      "required": [
+        "email",
+        "password"
+      ],
+      "properties": {
+        "email": {
+          "type": "string",
+          "format": "email"
+        },
+        "password": {
+          "type": "string"
+        }
+      }
+    },
+    "Travel": {
+      "type": "object",
+      "required": [
+        "nameViagem",
+        "destinoViagem"
+      ],
+      "properties": {
+        "nameViagem": {
+          "type": "string"
+        },
+        "destinoViagem": {
+          "type": "string"
+        }
+      }
+    },
+    "TravelVote": {
+      "type": "object",
+      "required": [
+        "vou",
+        "volto",
+        "vouEvolto",
+        "naoVou"
+      ],
+      "properties": {
+        "vou": {
+          "type": "boolean"
+        },
+        "volto": {
+          "type": "boolean"
+        },
+        "vouEvolto": {
+          "type": "boolean"
+        },
+        "naoVou": {
+          "type": "boolean"
+        }
+      }
+    },
+    "UserInfo": {
+      "type": "object",
+      "required": [
+        "cpf",
+        "matricula",
+        "semestre",
+        "contaativa",
+        "localizacao"
+      ],
+      "properties": {
+        "cpf": {
+          "type": "string"
+        },
+        "matricula": {
+          "type": "string"
+        },
+        "semestre": {
+          "type": "string"
+        },
+        "contaativa": {
+          "type": "boolean"
+        },
+        "localizacao": {
+          "type": "string"
+        }
+      }
+    },
+    "UserResponse": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string"
+        },
+        "user": {
+          "$ref": "#/definitions/User"
+        }
+      }
+    },
+    "TravelResponse": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string"
+        },
+        "travel": {
+          "$ref": "#/definitions/Travel"
+        }
+      }
+    },
+    "VoteResponse": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string"
+        },
+        "vote": {
+          "$ref": "#/definitions/TravelVote"
+        }
+      }
+    },
+    "UserInfoResponse": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string"
+        },
+        "userInfo": {
+          "$ref": "#/definitions/UserInfo"
+        }
+      }
+    }
+  }
+}

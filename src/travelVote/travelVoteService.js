@@ -1,5 +1,3 @@
-const TravelVote = require("./travelVote");
-
 class TravelVoteService {
   constructor(repository) {
     this.repository = repository;
@@ -21,6 +19,19 @@ class TravelVoteService {
 
   async getVotesByTravel(travelId) {
     return await this.repository.findByTravel(travelId);
+  }
+
+  async updateVote({ id, vou, volto, vouEvolto, naoVou }) {
+    const updatedVote = new TravelVote({
+      id,
+      vou,
+      volto,
+      vouEvolto,
+      naoVou,
+    });
+
+    await this.repository.update(updatedVote);
+    return updatedVote;
   }
 }
 

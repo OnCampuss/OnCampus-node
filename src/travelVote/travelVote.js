@@ -5,10 +5,10 @@ class TravelVote {
     this.id = id ?? uuidV4();
     this.travelId = travelId;
     this.userId = userId;
-    this.vou = vou ?? false;
-    this.volto = volto ?? false;
-    this.vouEvolto = vouEvolto ?? false;
-    this.naoVou = naoVou ?? false;
+    this.vou = vou;
+    this.volto = volto;
+    this.vouEvolto = vouEvolto;
+    this.naoVou = naoVou;
   }
 }
 

@@ -19,6 +19,9 @@ class TravelVoteRepository {
     return votes.map(vote => new TravelVote(vote));
   }
 
+  async update(travelVote) { await this.db.none("UPDATE TravelVotes SET vou = ${vou}, volto = ${volto}, vou_e_volto = ${vouEvolto}, nao_vou = ${naoVou} WHERE id = ${id}", travelVote); }
+
+
 }
 
 module.exports = TravelVoteRepository;

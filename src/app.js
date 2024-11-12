@@ -1,8 +1,21 @@
 const fastify = require("fastify");
-
 const app = fastify({ logger: true });
-
+const swagger = require("@fastify/swagger");
+const path = require('path');
+const fs = require('fs');
 //Travel VOTE
+
+
+
+
+
+
+//const swaggerDocument = JSON.parse(fs.readFileSync(path.join(__dirname, 'swagger.json'))); fastify.register(swagger, { routePrefix: '/documentation', swagger: swaggerDocument, exposeRoute: true });
+//fastify.listen(3000, (err, address) => { if (err) { fastify.log.error(err); process.exit(1); } fastify.log.info(`Servidor rodando em ${address}`); });
+
+
+
+
 
 const TravelVoteRepository = require("./travelVote/travelVoteRepository");
 const TravelVoteService = require("./travelVote/travelVoteService");
@@ -113,8 +126,33 @@ app.get(
 	}
 );
 
+app.put(
+	"/api/votes/:id",
+	validadorDeOpcaoAutenticacao,
+	async (request, reply) => {
+		const { code, body } = await voteController.update(request, reply);
+		reply.code(code).send(body);
+	}
+);
 
-app.get("/api/userinfo", validadorDeOpcaoAutenticacao, async (request, reply) => { const { code, body } = await userInfoController.index(request); reply.code(code).send(body); }); app.post("/api/userinfo", validadorDeOpcaoAutenticacao, async (request, reply) => { const { code, body } = await userInfoController.save(request); reply.code(code).send(body); });
+
+
+
+
+app.get("/api/userinfo", validadorDeOpcaoAutenticacao, async (request, reply) => {
+	const { code, body } = await userInfoController.index(request);
+	reply.code(code).send(body);
+});
+
+app.post("/api/userinfo", validadorDeOpcaoAutenticacao, async (request, reply) => {
+	const { code, body } = await userInfoController.save(request);
+	reply.code(code).send(body);
+}); // Método para atualizar informações do usuário app.put("/api/userinfo", validadorDeOpcaoAutenticacao, async (request, reply) => { const { code, body } = await userInfoController.update(request); reply.code(code).send
+
+app.put("/api/userinfo", validadorDeOpcaoAutenticacao, async (request, reply) => {
+	const { code, body } = await userInfoController.update(request);
+	reply.code(code).send(body);
+});
 
 
 

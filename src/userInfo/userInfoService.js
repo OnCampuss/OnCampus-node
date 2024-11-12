@@ -29,6 +29,20 @@ class UserInfoService {
     await this.repository.create(newUserInfo);
     return newUserInfo;
   }
+
+  async updateUserInfo({ cpf, matricula, semestre, contaativa, localizacao, userId }) {
+    const updatedUserInfo = new UserInfo({
+      cpf,
+      matricula,
+      semestre,
+      contaativa,
+      localizacao,
+      userId,
+    });
+
+    await this.repository.update(updatedUserInfo);
+    return updatedUserInfo;
+  }
 }
 
 module.exports = UserInfoService;

@@ -19,6 +19,13 @@ class UserInfoRepository {
       userInfo
     );
   }
+
+  async update(userInfo) {
+    await this.db.none(
+      "UPDATE UserInfo SET matricula=${matricula}, semestre=${semestre}, contaativa=${contaativa}, localizacao=${localizacao} WHERE cpf=${cpf} AND user_id=${userId}",
+      userInfo
+    );
+  }
 }
 
 module.exports = UserInfoRepository;
