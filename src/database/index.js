@@ -5,7 +5,7 @@ const { join } = require("node:path")
 const connection = {
   host: 'localhost',
   port: 5432,
-  database: 'oncampusNode',
+  database: 'oncampusnode',
   user: 'postgres',
   password: 'postgres'
 };
