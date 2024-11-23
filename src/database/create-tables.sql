@@ -4,8 +4,8 @@ CREATE TABLE IF NOT EXISTS Users (
   email VARCHAR(100),
   password VARCHAR(255),
   cpf VARCHAR(255),
-  matricula VARCHAR(255),
-  semestre VARCHAR(255)
+  semestre VARCHAR(255),
+  curso VARCHAR(255)
 );
 
 CREATE TABLE IF NOT EXISTS Travels (

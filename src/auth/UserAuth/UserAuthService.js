@@ -6,20 +6,19 @@ class AuthService {
 	constructor(repository) {
 		this.repository = repository;
 	}
-	// Método para registrar novos usuários
-	async register(name, email, password) {
-		const UsuariosExistentes = await this.repository.findByEmail(email);
-		if (UsuariosExistentes)
-			throw new Error("Esse email já está sendo usado por outro usuário!!  ");
-		const NovoUsuario = new User({ name, email, password });
 
-		//Adicionando a biblioteca bcrypt, ela serve para fazer uma criptografia da senha.
+	async register(name, email, password, cpf, semestre, curso) {
+		const UsuariosExistentes = await this.repository.findByEmail(email);
+		if (UsuariosExistentes) {
+			throw new Error("Esse email já está sendo usado por outro usuário!!");
+		}
+		const NovoUsuario = new User({ name, email, password, cpf, semestre, curso });
+
 		NovoUsuario.password = bcrypt.hashSync(NovoUsuario.password, 10);
 		await this.repository.save(NovoUsuario);
 		return NovoUsuario;
 	}
 
-	//Método de Login
 	async login(email, password) {
 		const user = await this.repository.findByEmail(email);
 		if (!user) throw new Error("Usuário não encontrado");
@@ -32,7 +31,6 @@ class AuthService {
 			"segredo-do-jwt",
 			{ expiresIn: "30d" },
 		);
-		//ExpiresIn :Válido por quanto tempo*
 		return { token, user };
 	}
 
@@ -42,4 +40,5 @@ class AuthService {
 		return user;
 	}
 }
+
 module.exports = AuthService;

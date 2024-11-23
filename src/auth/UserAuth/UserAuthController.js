@@ -4,15 +4,15 @@ class AuthController {
 	}
 
 	async register(request) {
-		const { name, email, password } = request.body;
-		if (!name || !email || !password) {
+		const { name, email, password, cpf, semestre, curso } = request.body;
+		if (!name || !email || !password || !cpf || !semestre || !curso) {
 			return {
 				code: 400,
-				body: { message: "Nome, email, senha são obrigatórios" },
+				body: { message: "Nome, email, senha, CPF, semestre e curso são obrigatórios" },
 			};
 		}
 		try {
-			const user = await this.service.register(name, email, password);
+			const user = await this.service.register(name, email, password, cpf, semestre, curso);
 			return { code: 201, body: user, message: "Usuário criado com sucesso!!" };
 		} catch (error) {
 			return { code: 400, body: { message: error.message } };
@@ -24,7 +24,7 @@ class AuthController {
 		if (!email || !password) {
 			return {
 				code: 400,
-				body: { message: "email e senha senha são obrigatórios" },
+				body: { message: "Email e senha são obrigatórios" },
 			};
 		}
 		try {

@@ -6,22 +6,21 @@ class UserPostgreRepository {
 		this.db = db;
 	}
 
-	// Realiza a busca do usuário criado com o e-mail
-	//Pode se alterar o oneOrNone() por query()
 	async findByEmail(email) {
-		const UsuarioArmazenado = await this.db.oneOrNone("SELECT * FROM Users WHERE email = $1", email)
-		return UsuarioArmazenado ? new User(UsuarioArmazenado) : null
+		const UsuarioArmazenado = await this.db.oneOrNone("SELECT * FROM Users WHERE email = $1", email);
+		return UsuarioArmazenado ? new User(UsuarioArmazenado) : null;
 	}
 
-	//Push -- Insere novos usuários "Criação de usuários"
-
 	async save(user) {
-		await this.db.none("INSERT INTO Users (id,name,email,password) VALUES ($1, $2,$3,$4)", [
+		await this.db.none("INSERT INTO Users (id, name, email, password, cpf, semestre, curso) VALUES ($1, $2, $3, $4, $5, $6, $7)", [
 			user.id,
 			user.name,
 			user.email,
-			user.password
-		])
+			user.password,
+			user.cpf,
+			user.semestre,
+			user.curso,
+		]);
 	}
 }
 
