@@ -2,7 +2,10 @@ CREATE TABLE IF NOT EXISTS Users (
   id VARCHAR(200) PRIMARY KEY,
   name VARCHAR(100),
   email VARCHAR(100),
-  password VARCHAR(255)
+  password VARCHAR(255),
+  cpf VARCHAR(255),
+  matricula VARCHAR(255),
+  semestre VARCHAR(255)
 );
 
 CREATE TABLE IF NOT EXISTS Travels (
@@ -20,17 +23,8 @@ CREATE TABLE IF NOT EXISTS TravelVotes (
   vou BOOLEAN DEFAULT FALSE,
   volto BOOLEAN DEFAULT FALSE,
   vou_e_volto BOOLEAN DEFAULT FALSE,
-  nao_vou BOOLEAN DEFAULT TRUE,
+  nao_vou BOOLEAN DEFAULT FALSE,
   FOREIGN KEY (travel_id) REFERENCES Travels(id),
   FOREIGN KEY (user_id) REFERENCES Users(id)
 );
 
-CREATE TABLE IF NOT EXISTS UserInfo (
-  cpf VARCHAR(200) PRIMARY KEY,
-  matricula VARCHAR(255),
-  semestre VARCHAR(255),
-  contaativa BOOLEAN DEFAULT TRUE,
-  localizacao VARCHAR(255),
-  user_id VARCHAR(200),
-  FOREIGN KEY (user_id) REFERENCES Users(id)
-);

@@ -4,38 +4,49 @@ class TravelVoteController {
   }
 
   async save(request, reply) {
-    const { vou, volto, vouEvolto, naoVou } = request.body;
-    const user = request.user;
-    const { travelId } = request.params;
-    const vote = await this.service.createVote({
-      travelId,
-      userId: user.id,
-      vou,
-      volto,
-      vouEvolto,
-      naoVou,
-    });
+    try {
+      const { vou, volto, vouEvolto, naoVou } = request.body;
+      const user = request.user;
+      const { travelId } = request.params;
+      const vote = await this.service.createVote({
+        travelId,
+        userId: user.id,
+        vou,
+        volto,
+        vouEvolto,
+        naoVou,
+      });
 
-    return reply.status(201).send({ message: "Voto registrado com sucesso!", vote });
+      return reply.status(201).send({ message: "Voto registrado com sucesso!", vote });
+    } catch (error) {
+      return reply.status(500).send({ error: "Erro ao registrar voto", details: error.message });
+    }
   }
 
   async index(request, reply) {
-    const { travelId } = request.query;
-    const votes = await this.service.getVotesByTravel(travelId);
-    return reply.status(200).send({ votes });
+    try {
+      const { travelId } = request.query;
+      const votes = await this.service.getVotesByTravel(travelId);
+      return { code: 200, body: { votes } };
+    } catch (error) {
+      return { code: 500, body: { error: "Erro ao buscar votos", details: error.message } };
+    }
   }
 
   async update(request, reply) {
-    const { id, vou, volto, vouEvolto, naoVou } = request.body;
-    const vote = await this.service.updateVote({
-      id,
-      vou,
-      volto,
-      vouEvolto,
-      naoVou,
-    });
-
-    return reply.status(200).send({ message: "Voto atualizado com sucesso!", vote });
+    try {
+      const { id, vou, volto, vouEvolto, naoVou } = request.body;
+      const vote = await this.service.updateVote({
+        id,
+        vou,
+        volto,
+        vouEvolto,
+        naoVou,
+      });
+      return reply.status(200).send({ message: "Voto atualizado com sucesso!", vote });
+    } catch (error) {
+      return reply.status(400).send({ error: "Erro ao atualizar voto", details: error.message });
+    }
   }
 }
 

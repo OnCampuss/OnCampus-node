@@ -1,22 +1,8 @@
 const fastify = require("fastify");
 const app = fastify({ logger: true });
-const swagger = require("@fastify/swagger");
-const path = require('path');
-const fs = require('fs');
-//Travel VOTE
 
 
-
-
-
-
-//const swaggerDocument = JSON.parse(fs.readFileSync(path.join(__dirname, 'swagger.json'))); fastify.register(swagger, { routePrefix: '/documentation', swagger: swaggerDocument, exposeRoute: true });
-//fastify.listen(3000, (err, address) => { if (err) { fastify.log.error(err); process.exit(1); } fastify.log.info(`Servidor rodando em ${address}`); });
-
-
-
-
-
+//Travel Vote
 const TravelVoteRepository = require("./travelVote/travelVoteRepository");
 const TravelVoteService = require("./travelVote/travelVoteService");
 const TravelVoteController = require("./travelVote/travelVoteController");
@@ -47,17 +33,6 @@ const TravelController = require("./travels/travelController");
 const travelRepository = new travelPostgreRepository();
 const travelService = new TravelService(travelRepository);
 const travelController = new TravelController(travelService);
-
-
-// User Info
-
-const UserInfoRepository = require("./userInfo/userInfoRepository");
-const UserInfoService = require("./userInfo/userInfoService");
-const UserInfoController = require("./userInfo/userInfoController");
-
-const userInfoRepository = new UserInfoRepository();
-const userInfoService = new UserInfoService(userInfoRepository);
-const userInfoController = new UserInfoController(userInfoService);
 
 
 const validadorDeOpcaoAutenticacao = {
@@ -134,27 +109,6 @@ app.put(
 		reply.code(code).send(body);
 	}
 );
-
-
-
-
-
-app.get("/api/userinfo", validadorDeOpcaoAutenticacao, async (request, reply) => {
-	const { code, body } = await userInfoController.index(request);
-	reply.code(code).send(body);
-});
-
-app.post("/api/userinfo", validadorDeOpcaoAutenticacao, async (request, reply) => {
-	const { code, body } = await userInfoController.save(request);
-	reply.code(code).send(body);
-}); // Método para atualizar informações do usuário app.put("/api/userinfo", validadorDeOpcaoAutenticacao, async (request, reply) => { const { code, body } = await userInfoController.update(request); reply.code(code).send
-
-app.put("/api/userinfo", validadorDeOpcaoAutenticacao, async (request, reply) => {
-	const { code, body } = await userInfoController.update(request);
-	reply.code(code).send(body);
-});
-
-
 
 
 module.exports = app;

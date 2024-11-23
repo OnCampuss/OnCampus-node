@@ -14,14 +14,18 @@ class TravelVoteRepository {
   }
 
   async findByTravel(travelId) {
-    const query = "SELECT * FROM TravelVotes WHERE travel_id = $1";
-    const votes = await this.db.manyOrNone(query, [travelId]);
-    return votes.map(vote => new TravelVote(vote));
+    const query = "SELECT * FROM TravelVotes";
+    return await db.manyOrNone(query, [travelId]);
   }
 
-  async update(travelVote) { await this.db.none("UPDATE TravelVotes SET vou = ${vou}, volto = ${volto}, vou_e_volto = ${vouEvolto}, nao_vou = ${naoVou} WHERE id = ${id}", travelVote); }
 
 
+  async update(travelVote) {
+    await this.db.none(
+      "UPDATE TravelVotes SET vou = ${vou}, volto = ${volto}, vou_e_volto = ${vouEvolto}, nao_vou = ${naoVou} WHERE id = ${id}",
+      travelVote
+    );
+  }
 }
 
 module.exports = TravelVoteRepository;

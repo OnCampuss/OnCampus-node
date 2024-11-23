@@ -1,3 +1,5 @@
+const TravelVote = require("./travelVote");
+
 class TravelVoteService {
   constructor(repository) {
     this.repository = repository;
