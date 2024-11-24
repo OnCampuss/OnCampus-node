@@ -7,12 +7,12 @@ class AuthService {
 		this.repository = repository;
 	}
 
-	async register(name, email, password, cpf, semestre, curso) {
+	async register(name, email, password, cpf, semestre, curso, matricula) {
 		const UsuariosExistentes = await this.repository.findByEmail(email);
 		if (UsuariosExistentes) {
 			throw new Error("Esse email já está sendo usado por outro usuário!!");
 		}
-		const NovoUsuario = new User({ name, email, password, cpf, semestre, curso });
+		const NovoUsuario = new User({ name, email, password, cpf, semestre, curso, matricula });
 
 		NovoUsuario.password = bcrypt.hashSync(NovoUsuario.password, 10);
 		await this.repository.save(NovoUsuario);

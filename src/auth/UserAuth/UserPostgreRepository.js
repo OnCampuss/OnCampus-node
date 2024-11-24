@@ -12,7 +12,7 @@ class UserPostgreRepository {
 	}
 
 	async save(user) {
-		await this.db.none("INSERT INTO Users (id, name, email, password, cpf, semestre, curso) VALUES ($1, $2, $3, $4, $5, $6, $7)", [
+		await this.db.none("INSERT INTO Users (id, name, email, password, cpf, semestre, curso, matricula) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)", [
 			user.id,
 			user.name,
 			user.email,
@@ -20,6 +20,7 @@ class UserPostgreRepository {
 			user.cpf,
 			user.semestre,
 			user.curso,
+			user.matricula
 		]);
 	}
 }
