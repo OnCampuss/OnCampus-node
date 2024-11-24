@@ -5,10 +5,10 @@ CREATE TABLE IF NOT EXISTS Users (
   password VARCHAR(255),
   cpf VARCHAR(255),
   semestre VARCHAR(255),
-  curso VARCHAR(255)
+  curso VARCHAR(255),
+  matricula VARCHAR(255)
 );
 
-ALTER TABLE Users ADD COLUMN matricula VARCHAR(255);
 
 CREATE TABLE IF NOT EXISTS Travels (
   id VARCHAR(200) PRIMARY KEY,

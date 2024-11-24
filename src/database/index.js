@@ -7,7 +7,7 @@ const connection = {
   port: 5432,
   database: 'oncampusnode',
   user: 'postgres',
-  password: 'postgres'
+  password: 'admin'
 };
 
 const db = pgp(connection);
