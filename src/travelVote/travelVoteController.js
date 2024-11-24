@@ -5,7 +5,7 @@ class TravelVoteController {
 
   async save(request, reply) {
     try {
-      const { vou, volto, vouEvolto, naoVou } = request.body;
+      const { vou, volto, vouevolto, naoVou } = request.body;
       const user = request.user;
       const { travelId } = request.params;
       const vote = await this.service.createVote({
@@ -13,7 +13,7 @@ class TravelVoteController {
         userId: user.id,
         vou,
         volto,
-        vouEvolto,
+        vouevolto,
         naoVou,
       });
 
@@ -35,12 +35,12 @@ class TravelVoteController {
 
   async update(request, reply) {
     try {
-      const { id, vou, volto, vouEvolto, naoVou } = request.body;
+      const { id, vou, volto, vouevolto, naoVou } = request.body;
       const vote = await this.service.updateVote({
         id,
         vou,
         volto,
-        vouEvolto,
+        vouevolto,
         naoVou,
       });
       return reply.status(200).send({ message: "Voto atualizado com sucesso!", vote });

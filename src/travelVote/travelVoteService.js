@@ -5,13 +5,13 @@ class TravelVoteService {
     this.repository = repository;
   }
 
-  async createVote({ travelId, userId, vou, volto, vouEvolto, naoVou }) {
+  async createVote({ travelId, userId, vou, volto, vouevolto, naoVou }) {
     const newVote = new TravelVote({
       travelId,
       userId,
       vou,
       volto,
-      vouEvolto,
+      vouevolto,
       naoVou,
     });
 
@@ -23,12 +23,12 @@ class TravelVoteService {
     return await this.repository.findByTravel(travelId);
   }
 
-  async updateVote({ id, vou, volto, vouEvolto, naoVou }) {
+  async updateVote({ id, vou, volto, vouevolto, naoVou }) {
     const updatedVote = new TravelVote({
       id,
       vou,
       volto,
-      vouEvolto,
+      vouevolto,
       naoVou,
     });
 

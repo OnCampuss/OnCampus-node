@@ -8,7 +8,7 @@ class TravelVoteRepository {
 
   async create(travelVote) {
     await this.db.none(
-      "INSERT INTO TravelVotes (id, travel_id, user_id, vou, volto, vou_e_volto, nao_vou) VALUES (${id}, ${travelId}, ${userId}, ${vou}, ${volto}, ${vouEvolto}, ${naoVou})",
+      "INSERT INTO TravelVotes (id, travel_id, user_id, vou, volto, vouevolto, nao_vou) VALUES (${id}, ${travelId}, ${userId}, ${vou}, ${volto}, ${vouevolto}, ${naoVou})",
       travelVote
     );
   }
