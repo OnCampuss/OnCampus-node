@@ -29,7 +29,7 @@ class AuthController {
 		}
 		try {
 			const body = await this.service.login(email, password);
-			return { code: 200, body };
+			return { code: 200, body: { token: body.token, user: body.user } };
 		} catch (error) {
 			return { code: 400, body: { message: error.message } };
 		}
@@ -37,7 +37,7 @@ class AuthController {
 
 	async updateUserInfo(request) {
 		const { semestre, curso, name } = request.body;
-		const user = request.user; // Usuário vai ser pego pelo Token
+		const user = request.user;
 
 		try {
 			const response = await this.service.updateUserInfo(user.id, { semestre, curso, name });
