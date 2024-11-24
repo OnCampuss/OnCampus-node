@@ -23,6 +23,15 @@ class UserPostgreRepository {
 			user.matricula
 		]);
 	}
+
+	async update(userId, { semestre, curso, name }) {
+		await this.db.none(
+			"UPDATE Users SET semestre = $1, curso = $2, name = $3 WHERE id = $4",
+			[semestre, curso, name, userId]
+		);
+	}
+
+
 }
 
 module.exports = UserPostgreRepository;

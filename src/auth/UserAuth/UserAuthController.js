@@ -8,7 +8,7 @@ class AuthController {
 		if (!name || !email || !password || !cpf || !semestre || !curso || !matricula) {
 			return {
 				code: 400,
-				body: { message: "Nome, email, senha, CPF, semestre e curso são obrigatórios" },
+				body: { message: "Todos os campos são obrigatórios!!" },
 			};
 		}
 		try {
@@ -34,6 +34,21 @@ class AuthController {
 			return { code: 400, body: { message: error.message } };
 		}
 	}
+
+	async updateUserInfo(request) {
+		const { semestre, curso, name } = request.body;
+		const user = request.user; // Usuário vai ser pego pelo Token
+
+		try {
+			const response = await this.service.updateUserInfo(user.id, { semestre, curso, name });
+			return { code: 200, body: response };
+		} catch (error) {
+			return { code: 400, body: { message: error.message } };
+		}
+	}
+
+
+
 }
 
 module.exports = AuthController;

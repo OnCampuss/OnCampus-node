@@ -34,6 +34,17 @@ class AuthService {
 		return { token, user };
 	}
 
+	// UPDATE USER INFO
+	async updateUserInfo(userId, { semestre, curso, name }) {
+		//if (!semestre || !curso || !nome) {
+		//	throw new Error("Todos os campos (semestre, curso, nome) são obrigatórios para atualizar.");
+		//}
+
+		await this.repository.update(userId, { semestre, curso, name });
+		return { message: "Informações atualizadas com sucesso!" };
+	}
+
+
 	async verificaToken(token) {
 		const tokenDecodificado = jwt.verify(token, "segredo-do-jwt");
 		const user = await this.repository.findByEmail(tokenDecodificado.email);

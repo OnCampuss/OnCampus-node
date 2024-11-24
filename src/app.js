@@ -79,6 +79,14 @@ app.post("/api/auth/login", async (request, reply) => {
 	reply.code(code).send(body);
 });
 
+
+app.put("/api/auth/updateUserInfo", validadorDeOpcaoAutenticacao, async (request, reply) => {
+	const { code, body } = await authController.updateUserInfo(request);
+	reply.code(code).send(body);
+});
+
+
+
 // Registro de criação de Usuário para Motorista
 app.post("/api/auth/registerMotora", async (request, reply) => {
 	const { code, body } = await motoraAuthController.register(request);
