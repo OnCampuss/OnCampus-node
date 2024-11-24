@@ -9,6 +9,13 @@ CREATE TABLE IF NOT EXISTS Users (
   matricula VARCHAR(255)
 );
 
+CREATE TABLE IF NOT EXISTS Motoradb (
+  id VARCHAR(200) PRIMARY KEY,
+  name VARCHAR(100),
+  email VARCHAR(100),
+  password VARCHAR(255)
+);
+
 
 CREATE TABLE IF NOT EXISTS Travels (
   id VARCHAR(200) PRIMARY KEY,
@@ -29,4 +36,7 @@ CREATE TABLE IF NOT EXISTS TravelVotes (
   FOREIGN KEY (travel_id) REFERENCES Travels(id),
   FOREIGN KEY (user_id) REFERENCES Users(id)
 );
+
+
+
 
