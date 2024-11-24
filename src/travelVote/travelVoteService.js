@@ -24,6 +24,7 @@ class TravelVoteService {
   }
 
   async updateVote({ id, vou, volto, vouevolto, naoVou }) {
+    // Aqui, estamos pegando os valores do voto a ser atualizado
     const updatedVote = new TravelVote({
       id,
       vou,
@@ -32,6 +33,7 @@ class TravelVoteService {
       naoVou,
     });
 
+    // Chamando o repositório para realizar a atualização
     await this.repository.update(updatedVote);
     return updatedVote;
   }

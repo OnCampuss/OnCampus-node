@@ -68,6 +68,12 @@ app.post("/api/travels", validadorDeOpcaoAutenticacao, async (request, reply) =>
 	reply.code(code).send(body);
 });
 
+app.delete("/api/travels/:id", validadorDeOpcaoAutenticacao, async (request, reply) => {
+	const { code, body } = await travelController.delete(request, reply);
+	reply.code(code).send(body);
+});
+
+
 // Registro de login usuário
 app.post("/api/auth/register", async (request, reply) => {
 	const { code, body } = await authController.register(request);

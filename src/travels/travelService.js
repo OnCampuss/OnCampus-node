@@ -41,6 +41,23 @@ class TravelService {
 		await this.repository.create(newTravels);
 		return newTravels;
 	}
+
+
+
+	async deleteTravels(id) {
+		const allTravels = await this.repository.findAll();
+		const travel = allTravels.find((travel) => travel.id === id);
+		if (!travel) {
+			throw new Error("Viagem não encontrada.");
+		}
+		await this.repository.delete(id);
+		return { message: "Viagem deletada com sucesso." };
+	}
+
+
+
+
+
 }
 
 module.exports = TravelService;

@@ -16,7 +16,7 @@ class TravelController {
 			destinoViagem,
 		} = request.body;
 		const user = request.user;
-		//rem
+
 		console.log(user);
 
 		if (!nameViagem) {
@@ -36,6 +36,21 @@ class TravelController {
 			body: { message: "Criado viagem com sucesso!!", travel },
 		};
 	}
+
+
+	async delete(request) {
+		const { id } = request.params;
+
+		try {
+			const result = await this.service.deleteTravels(id);
+			return { code: 200, body: result };
+		} catch (error) {
+			return { code: 400, body: { message: error.message } };
+		}
+	}
+
+
+
 }
 
 module.exports = TravelController;

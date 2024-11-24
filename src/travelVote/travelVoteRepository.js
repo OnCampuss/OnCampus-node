@@ -22,7 +22,7 @@ class TravelVoteRepository {
 
   async update(travelVote) {
     await this.db.none(
-      "UPDATE TravelVotes SET vou = ${vou}, volto = ${volto}, vou_e_volto = ${vouEvolto}, nao_vou = ${naoVou} WHERE id = ${id}",
+      "UPDATE TravelVotes SET vou = ${vou}, volto = ${volto}, vouevolto = ${vouevolto}, nao_vou = ${naoVou} WHERE id = ${id}",
       travelVote
     );
   }

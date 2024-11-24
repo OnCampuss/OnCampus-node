@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS TravelVotes (
   volto BOOLEAN DEFAULT FALSE,
   vouevolto BOOLEAN DEFAULT FALSE,
   nao_vou BOOLEAN DEFAULT FALSE,
-  FOREIGN KEY (travel_id) REFERENCES Travels(id),
+  FOREIGN KEY (travel_id) REFERENCES Travels(id) ON DELETE CASCADE,
   FOREIGN KEY (user_id) REFERENCES Users(id)
 );
 

@@ -17,6 +17,12 @@ class TravelPostgreRepository {
 	}
 
 
+	async delete(id) {
+		await this.db.none("DELETE FROM Travels WHERE id = $1", [id]);
+	}
+
+
+
 }
 
 module.exports = TravelPostgreRepository;
